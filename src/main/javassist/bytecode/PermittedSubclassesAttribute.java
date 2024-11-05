@@ -63,7 +63,6 @@ public class PermittedSubclassesAttribute extends AttributeInfo {
 		}
 	}
 
-	// Override the write method to output the attribute correctly
 	@Override
 	public void write(DataOutputStream out) throws IOException {
 		out.writeShort(constPool.addUtf8Info(getName()));

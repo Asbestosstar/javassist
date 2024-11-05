@@ -121,6 +121,8 @@ public class AttributeInfo {
                 return new ParameterAnnotationsAttribute(cp, name, in);
             else if (nameStr.equals(PermittedSubclassesAttribute.tag))
                 return new PermittedSubclassesAttribute(cp, name, in);
+            else if (nameStr.equals(RecordAttribute.tag))
+                return new RecordAttribute(cp, name, in);
             else if (nameStr.equals(TypeAnnotationsAttribute.visibleTag)
                      || nameStr.equals(TypeAnnotationsAttribute.invisibleTag))
                 return new TypeAnnotationsAttribute(cp, name, in);

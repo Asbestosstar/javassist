@@ -118,6 +118,16 @@ public class RecordAttribute extends AttributeInfo {
 		}
 
 		/**
+		 * Returns the name Index of the component.
+		 *
+		 * @return the component name
+		 */
+		public int getNameIndex() {
+			return nameIndex;
+		}
+		
+		
+		/**
 		 * Returns the name of the component.
 		 *
 		 * @return the component name

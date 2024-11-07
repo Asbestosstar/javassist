@@ -1,5 +1,6 @@
 package javassist.bytecode;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -47,9 +48,22 @@ public class RecordAttribute extends AttributeInfo {
 	            byte[] attrInfo = new byte[attrLength];
 	            System.arraycopy(info, pos, attrInfo, 0, attrLength);
 	            pos += attrLength;
-	            AttributeInfo attr = new AttributeInfo(constPool, attrNameIndex, attrInfo);
+
+	            // Create a byte array containing the attribute_name_index, attribute_length, and attrInfo
+	            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	            DataOutputStream dos = new DataOutputStream(baos);
+	            dos.writeShort(attrNameIndex);    // Write attribute_name_index (u2)
+	            dos.writeInt(attrLength);         // Write attribute_length (u4)
+	            dos.write(attrInfo);              // Write attribute_info (u1[attrLength])
+	            dos.flush();
+
+	            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(baos.toByteArray());
+	            DataInputStream dataInputStream = new DataInputStream(byteArrayInputStream);
+
+	            AttributeInfo attr = AttributeInfo.read(constPool, dataInputStream);
 	            attributes.add(attr);
 	        }
+
 	        RecordComponentInfo component = new RecordComponentInfo(constPool, name, descriptorIndex, attributes);
 	        components.add(component);
 	    }
